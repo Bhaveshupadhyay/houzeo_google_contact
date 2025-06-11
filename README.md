@@ -1,7 +1,7 @@
 # Flutter Clean Architecture (Bloc) - Houzeo
 
 Screen Recordings: https://drive.google.com/drive/folders/1fc-NRh0koBjBKg5avuV9aI5UpFGo-HZG?usp=share_link
-
+![houzeo](https://github.com/user-attachments/assets/f0a668fe-7e88-476d-9ae3-4300dc412ddd)
 
 
 ## Folder Structure
