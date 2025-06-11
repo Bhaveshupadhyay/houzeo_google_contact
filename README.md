@@ -4,7 +4,6 @@ Screen Recordings: https://drive.google.com/drive/folders/1fc-NRh0koBjBKg5avuV9a
 
 ![houzeo](https://github.com/user-attachments/assets/f0a668fe-7e88-476d-9ae3-4300dc412ddd)
 
-
 ## Folder Structure
 ```bash
 lib/
@@ -32,7 +31,20 @@ lib/
 └── main.dart
 ``` 
 
-## Installation
+## Setup Instructions  
+ 1. Clone the repo:
+```bash 
+git clone https://github.com/Bhaveshupadhyay/houzeo_google_contact.git
+cd flutter houzeo_google_contact
+```
+2. Install dependencies:
+```bash 
+flutter pub get
+```
+3. Run the app:
+```bash 
+flutter run
+```
 
 
 ## Libraries Used
