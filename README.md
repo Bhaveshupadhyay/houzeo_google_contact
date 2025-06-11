@@ -2,7 +2,7 @@
 
 Screen Recordings: https://drive.google.com/drive/folders/1fc-NRh0koBjBKg5avuV9aI5UpFGo-HZG?usp=share_link
 
-![houzeo](https://github.com/user-attachments/assets/f0a668fe-7e88-476d-9ae3-4300dc412ddd)
+![houzeo](https://github.com/user-attachments/assets/2643735c-2e74-41b6-a6f4-c6e96aafd491)
 
 ## Folder Structure
 ```bash
