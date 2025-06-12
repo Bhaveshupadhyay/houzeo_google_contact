@@ -30,7 +30,15 @@ lib/
 │   │       └── widgets/
 └── main.dart
 ``` 
-
+## Features
+- Modern UI/UX
+- Contact Management: Add, edit, delete, and view contact details.
+- Favorites: Mark contacts as favorites for quick access.
+- Call: Directly call contacts from the app.
+- Local Storage: Contacts stored securely in an SQLite database.
+- Responsive Design: Optimized for mobile phones and tablets.
+- Theme Support: Light and dark mode.
+  
 ## Setup Instructions  
  1. Clone the repo:
 ```bash 
@@ -45,7 +53,6 @@ flutter pub get
 ```bash 
 flutter run
 ```
-
 
 ## Libraries Used
 - flutter_screenutil
