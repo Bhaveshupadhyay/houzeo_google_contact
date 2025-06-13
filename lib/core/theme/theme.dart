@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_color.dart';
 
@@ -14,126 +13,149 @@ class AppTheme{
     borderRadius: BorderRadius.circular(10.r),
   );
 
-  static final ThemeData light=ThemeData.light().copyWith(
-    textTheme: TextTheme(
-      titleSmall: GoogleFonts.poppins(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w500,
-          color: AppColors.black
-      ),
-      titleMedium: GoogleFonts.poppins(
-          fontSize: 20.sp,
-          fontWeight: FontWeight.w500,
-          color: AppColors.black
-      ),
-      titleLarge: GoogleFonts.poppins(
-          fontSize: 45.sp,
-          fontWeight: FontWeight.w500,
-          color: AppColors.black
-      ),
-      headlineSmall: GoogleFonts.poppins(
-          fontSize: 22.sp,
-          fontWeight: FontWeight.bold,
-          color: AppColors.black
-      ),
-      bodySmall: GoogleFonts.poppins(
-          fontSize: 15.sp,
-          color: AppColors.black
-      ),
-      bodyMedium: GoogleFonts.poppins(
-          fontSize: 20.sp,
-          color: AppColors.black
-      ),
-      bodyLarge: GoogleFonts.poppins(
-          fontSize: 30.sp,
-          color: AppColors.black
-      ),
-    ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      unselectedItemColor: AppColors.black,
-      selectedItemColor: AppColors.primaryColor,
-      showUnselectedLabels: false,
-      showSelectedLabels: false,
-    ),
-    iconTheme: IconThemeData(
-        color: AppColors.black
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      contentPadding: EdgeInsets.symmetric(vertical:20.h,horizontal:20.w),
-      border: _border(),
-      enabledBorder: _border(AppColors.black.withValues(alpha: 0.5)),
-      focusedBorder: _border(AppColors.black),
-      errorBorder: _border(AppColors.errorColor),
-      hintStyle: GoogleFonts.poppins(
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w500,
-          color: AppColors.greyText
-      ),
-      labelStyle: GoogleFonts.poppins(
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w500,
-          color: AppColors.greyText
-      ),
-    ),
-  );
+  ThemeData get light{
+    return ThemeData.light().copyWith(
+          textTheme: TextTheme(
+            titleSmall: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.black
+            ),
+            titleMedium: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.black
+            ),
+            titleLarge: TextStyle(
+                fontSize: 45.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.black
+            ),
+            headlineSmall: TextStyle(
+                fontSize: 22.sp,
+                fontWeight: FontWeight.bold,
+                color: AppColors.black
+            ),
+            bodySmall: TextStyle(
+                fontSize: 15.sp,
+                color: AppColors.black
+            ),
+            bodyMedium: TextStyle(
+                fontSize: 20.sp,
+                color: AppColors.black
+            ),
+            bodyLarge: TextStyle(
+                fontSize: 30.sp,
+                color: AppColors.black
+            ),
+          ),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            unselectedItemColor: AppColors.black,
+            selectedItemColor: AppColors.primaryColor,
+            showUnselectedLabels: false,
+            showSelectedLabels: false,
+          ),
+          iconTheme: IconThemeData(
+              color: AppColors.black
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            contentPadding: EdgeInsets.symmetric(vertical:20.h,horizontal:20.w),
+            border: _border(),
+            enabledBorder: _border(AppColors.black.withValues(alpha: 0.5)),
+            focusedBorder: _border(AppColors.black),
+            errorBorder: _border(AppColors.errorColor),
+            hintStyle: TextStyle(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.greyText
+            ),
+            labelStyle: TextStyle(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.greyText
+            ),
+          ),
+          appBarTheme: AppBarTheme(
+            color: AppColors.white
+          ),
+          scaffoldBackgroundColor: AppColors.white,
 
-  static final ThemeData dark= ThemeData.dark().copyWith(
+        );
+  }
+
+  ThemeData get dark{
+    return ThemeData.dark().copyWith(
       scaffoldBackgroundColor: AppColors.black,
       textTheme: TextTheme(
-        titleSmall: GoogleFonts.poppins(
+        titleSmall: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.white
         ),
-        titleMedium: GoogleFonts.poppins(
+        titleMedium: TextStyle(
             fontSize: 20.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.white
         ),
-        titleLarge: GoogleFonts.poppins(
+        titleLarge: TextStyle(
             fontSize: 45.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.white
         ),
-        headlineSmall: GoogleFonts.poppins(
+        headlineSmall: TextStyle(
             fontSize: 20.sp,
             fontWeight: FontWeight.bold,
             color: AppColors.white
         ),
-        headlineMedium: GoogleFonts.poppins(
+        headlineMedium: TextStyle(
             fontSize: 22.sp,
             fontWeight: FontWeight.bold,
             color: AppColors.white
         ),
-        bodySmall: GoogleFonts.poppins(
+        bodySmall: TextStyle(
             fontSize: 15.sp,
             color: AppColors.white
         ),
-        bodyMedium: GoogleFonts.poppins(
+        bodyMedium: TextStyle(
             fontSize: 20.sp,
             color: AppColors.white
         ),
-        bodyLarge: GoogleFonts.poppins(
+        bodyLarge: TextStyle(
             fontSize: 30.sp,
             color: AppColors.white
         ),
 
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          unselectedItemColor: AppColors.white,
-          selectedItemColor: AppColors.primaryColor,
-          showUnselectedLabels: false,
-          showSelectedLabels: false,
+        unselectedItemColor: AppColors.white,
+        selectedItemColor: AppColors.primaryColor,
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
       ),
       iconTheme: IconThemeData(
           color: AppColors.white
       ),
-    inputDecorationTheme: InputDecorationTheme(
-      contentPadding: EdgeInsets.symmetric(vertical:20.h,horizontal:20.w),
-      border: _border(),
-      enabledBorder: _border(),
-      focusedBorder: _border(AppColors.black),
-      errorBorder: _border(AppColors.errorColor),
-    ),
-  );
+      inputDecorationTheme: InputDecorationTheme(
+        contentPadding: EdgeInsets.symmetric(vertical:20.h,horizontal:20.w),
+        border: _border(),
+        enabledBorder: _border(AppColors.white.withValues(alpha: 0.5)),
+        focusedBorder: _border(AppColors.white),
+        errorBorder: _border(AppColors.errorColor),
+        hintStyle: TextStyle(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w500,
+            color: AppColors.white
+        ),
+        labelStyle: TextStyle(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w500,
+            color: AppColors.white
+        ),
+      ),
+    );
+  }
+
+
+
+
 }

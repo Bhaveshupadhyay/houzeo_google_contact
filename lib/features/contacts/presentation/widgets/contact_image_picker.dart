@@ -8,7 +8,7 @@ import '../../../../core/theme/app_color.dart';
 
 class ContactImagePicker extends StatefulWidget {
   final String? imagePath;
-  final void Function(String) onImagePicked;
+  final void Function(String?) onImagePicked;
   const ContactImagePicker({super.key, this.imagePath, required this.onImagePicked});
 
   @override
@@ -81,12 +81,60 @@ class _ContactImagePickerState extends State<ContactImagePicker> {
         ),
 
         SizedBox(height: 10.h,),
-        Text('Add picture',
-          style: theme.textTheme.titleMedium?.copyWith(
-              color: AppColors.primaryColor
+        if(_contactImagePath!=null)
+          Row(
+            spacing: 25.w,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _imgIcon(
+                  icon: Icons.edit,
+                  text: 'Change',
+                  theme: theme,
+                  onTap: (){
+                    _pickImage(ImageSource.gallery);
+                  }
+              ),
+              _imgIcon(
+                  icon: Icons.delete_outline,
+                  text: 'Remove',
+                  theme: theme,
+                  onTap: (){
+                    setState(() {
+                      _contactImagePath = null;
+                      _contactImage = null;
+                    });
+                    widget.onImagePicked(null);
+                  }
+              ),
+            ],
+          )
+        else
+          _imgIcon(
+              text: 'Add picture',
+              theme: theme,
+              onTap: (){
+                _pickImage(ImageSource.gallery);
+              }
           ),
-        ),
       ],
     );
   }
+
+  Widget _imgIcon({IconData? icon, required String text, required ThemeData theme,VoidCallback? onTap})=>
+      InkWell(
+        onTap: onTap,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 2.w,
+          children: [
+            if(icon!=null)
+              Icon(icon,size: 20.sp,color: AppColors.primaryColor),
+            Text(text,
+              style: theme.textTheme.titleMedium?.copyWith(
+                  color: AppColors.primaryColor
+              ),
+            ),
+          ],
+        ),
+      );
 }

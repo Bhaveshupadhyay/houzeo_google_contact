@@ -15,6 +15,14 @@ class ContactCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme= Theme.of(context);
 
+    String fullName= contact.firstName;
+    if(contact.middleName!=null && contact.middleName!.isNotEmpty){
+      fullName = '$fullName ${contact.middleName}';
+    }
+    if(contact.lastName!=null && contact.lastName!.isNotEmpty){
+      fullName = '$fullName ${contact.lastName}';
+    }
+
     return InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (builder)=>ContactDetailsScreen(
@@ -26,7 +34,7 @@ class ContactCard extends StatelessWidget {
         children: [
           ContactCircularImage(name: contact.firstName, imagePath: contact.profileImage,),
           Expanded(
-            child: Text('${contact.firstName} ${contact.lastName}',
+            child: Text(fullName,
               style: theme.textTheme.bodyMedium,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

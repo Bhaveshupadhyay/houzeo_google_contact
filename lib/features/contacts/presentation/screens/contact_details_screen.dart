@@ -35,6 +35,7 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
   Widget build(BuildContext context) {
     final theme= Theme.of(context);
 
+
     return Scaffold(
       body: BlocListener<ContactCrudCubit,ContactState>(
         listener: (BuildContext context, ContactState state) {
@@ -49,6 +50,14 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
           builder: (BuildContext context, ContactState state) {
             if(state is ContactLoaded<Contact>){
               final contact= state.data;
+              String fullName= contact.firstName;
+              if(contact.middleName!=null && contact.middleName!.isNotEmpty){
+                fullName = '$fullName ${contact.middleName}';
+              }
+              if(contact.lastName!=null && contact.lastName!.isNotEmpty){
+                fullName = '$fullName ${contact.lastName}';
+              }
+
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -94,7 +103,7 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
                             height: 200.w,
                             imagePath: contact.profileImage,
                           ),
-                          Text('${contact.firstName} ${contact.middleName} ${contact.lastName}',
+                          Text(fullName,
                             style: theme.textTheme.bodyLarge,
                           )
                         ],
@@ -196,7 +205,14 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
                       child: Column(
                         spacing: 30.h,
                         children: [
-                          _contactSettingIcon(icon: Icons.share_outlined, settingName: 'Share contact', theme: theme),
+                          _contactSettingIcon(icon: Icons.share_outlined, settingName: 'Share contact', theme: theme,
+                          onTap: (){
+                            shareContact(
+                              contactName: '${contact.firstName} ${contact.middleName} ${contact.lastName}',
+                              phoneNumber: contact.phoneNumber,
+                              email: contact.email
+                            );
+                          }),
                           _contactSettingIcon(
                               icon: Icons.delete_outline,
                               settingName: 'Delete',

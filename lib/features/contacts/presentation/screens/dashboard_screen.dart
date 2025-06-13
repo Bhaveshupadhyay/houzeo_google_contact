@@ -33,7 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 20.w),
               child: InkWell(
                 onTap: ()=>
                     Navigator.push(context, MaterialPageRoute(builder: (builder)=>ContactSearchScreen())),

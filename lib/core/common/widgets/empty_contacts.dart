@@ -42,8 +42,12 @@ class EmptyContacts extends StatelessWidget {
         if(onTap!=null)
           ElevatedButton.icon(
             onPressed: onTap,
-            icon: Icon(Icons.add,color: AppColors.white,),
-            label: Text('Add Contact'),
+            icon: Icon(Icons.add,color: AppColors.white,size: 15.sp,),
+            label: Text('Add Contact',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: AppColors.white
+              ),
+            ),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,
               foregroundColor: Colors.white,

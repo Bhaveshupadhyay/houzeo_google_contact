@@ -5,6 +5,7 @@ import 'package:houzeo/core/common/widgets/common_btn.dart';
 import 'package:houzeo/core/common/widgets/common_phone_field.dart';
 import 'package:houzeo/core/common/widgets/common_textfield.dart';
 import 'package:houzeo/core/theme/app_color.dart';
+import 'package:houzeo/features/contacts/presentation/cubit/contact_favourite_cubit.dart';
 import 'package:houzeo/features/contacts/presentation/cubit/contact_load_by_id_cubit.dart';
 import 'package:houzeo/features/contacts/presentation/cubit/contact_state.dart';
 import 'package:houzeo/features/contacts/presentation/widgets/contact_image_picker.dart';
@@ -12,6 +13,7 @@ import 'package:intl_phone_field/phone_number.dart';
 
 import '../../../../core/utils/show_snackbar.dart';
 import '../../domain/entities/contact.dart';
+import '../cubit/conatct_search_cubit.dart';
 import '../cubit/contact_crud_cubit.dart';
 
 
@@ -45,6 +47,7 @@ class _ContactEditDetailsState extends State<ContactEditDetails> {
      _phoneNumber= PhoneNumber(countryISOCode: widget.contact.countryCode,
          countryCode: '+91', number: widget.contact.phoneNumber);
      _phoneController.text= widget.contact.phoneNumber;
+     _contactImgPath= widget.contact.profileImage;
     super.initState();
   }
 
@@ -68,6 +71,7 @@ class _ContactEditDetailsState extends State<ContactEditDetails> {
           showSnackBar(context, 'Contact Updated');
           context.read<ContactLoadByIdCubit>().getContactById(contactId: widget.contact.id!);
           context.read<ContactCrudCubit>().loadAllContacts();
+          context.read<ContactFavouriteCubit>().loadAllFavouriteContacts();
           Navigator.pop(context);
 
         }
@@ -76,120 +80,132 @@ class _ContactEditDetailsState extends State<ContactEditDetails> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Edit Contact',
-            style: theme.textTheme.bodyMedium,
-          ),
-          centerTitle: false,
-          actions: [
-            CommonBtn(
-              text: 'Save',
-              onTap: (){
-                print(_phoneNumber);
-                if(_formKey.currentState!.validate() && (_phoneNumber?.isValidNumber()??false)){
-                  context.read<ContactCrudCubit>().updateContact(
-                      contactId: widget.contact.id!,
-                      firstName: _firstNameController.text,
-                      middleName: _middleNameController.text,
-                      lastName: _lastNameController.text,
-                      company: _companyController.text,
-                      email: _emailController.text,
-                      profileImage: _contactImgPath,
-                      phoneNumber: _phoneNumber!.number,
-                      countryCode: _phoneNumber!.countryISOCode
-                  );
-                }
-              },
-              fillColor: AppColors.primaryColor,
-              textColor: AppColors.white,
-
-            ),
-            SizedBox(width: 10.w,),
-          ],
-          leading: IconButton(
-            icon: const Icon(Icons.close), // <-- This line is changedx
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
-        body: SingleChildScrollView(
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.h,horizontal: 20.w),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  ContactImagePicker(
-                    onImagePicked: (imgPath){
-                      _contactImgPath= imgPath;
-                    },
-                    imagePath: widget.contact.profileImage,
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.close,size: 20.sp,),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    SizedBox(width: 5.w,),
+                    Text('Edit Contact',
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    Spacer(),
+                    CommonBtn(
+                      text: 'Save',
+                      onTap: (){
+                        if(_formKey.currentState!.validate() && (_phoneNumber?.isValidNumber()??false)){
+                          context.read<ContactCrudCubit>().updateContact(
+                              contactId: widget.contact.id!,
+                              firstName: _firstNameController.text,
+                              middleName: _middleNameController.text,
+                              lastName: _lastNameController.text,
+                              company: _companyController.text,
+                              email: _emailController.text,
+                              profileImage: _contactImgPath,
+                              phoneNumber: _phoneNumber!.number,
+                              countryCode: _phoneNumber!.countryISOCode,
+                              isFavourite: widget.contact.isFavourite
+                          );
+                        }
+                      },
+                      fillColor: AppColors.primaryColor,
+                      textColor: AppColors.white,
+                    ),
+                  ],
+                ),
+
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.h,horizontal: 10.w),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                  
+                            ContactImagePicker(
+                              onImagePicked: (imgPath){
+                                _contactImgPath= imgPath;
+                              },
+                              imagePath: _contactImgPath,
+                            ),
+                  
+                            SizedBox(height: 40.h,),
+                  
+                            CommonTextField(
+                              hintText: 'First Name',
+                              textEditingController: _firstNameController,
+                              keyboardType: TextInputType.text,
+                              labelText: 'First Name',
+                            ),
+                  
+                            SizedBox(height: 20.h,),
+                  
+                            CommonTextField(
+                              hintText: 'Middle Name',
+                              textEditingController: _middleNameController,
+                              keyboardType: TextInputType.text,
+                              labelText: 'Middle Name',
+                              isOptional: true,
+                            ),
+                  
+                            SizedBox(height: 20.h,),
+                  
+                            CommonTextField(
+                              hintText: 'Surname',
+                              textEditingController: _lastNameController,
+                              keyboardType: TextInputType.text,
+                              labelText: 'Surname',
+                              isOptional: true,
+                            ),
+                  
+                            SizedBox(height: 20.h,),
+                  
+                            CommonTextField(
+                              hintText: 'Company',
+                              textEditingController: _companyController,
+                              keyboardType: TextInputType.text,
+                              labelText: 'Company',
+                              isOptional: true,
+                            ),
+                  
+                            SizedBox(height: 20.h,),
+                  
+                            CommonTextField(
+                              hintText: 'Email',
+                              textEditingController: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              labelText: 'Email',
+                              isOptional: true,
+                            ),
+                  
+                            SizedBox(height: 20.h,),
+                  
+                            CommonPhoneField(
+                              textEditingController: _phoneController,
+                              onChanged: (phoneNumber){
+                                _phoneNumber=phoneNumber;
+                              },
+                              countryIsoCode: widget.contact.countryCode,
+                            ),
+                  
+                            SizedBox(height: 20.h,),
+                  
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-
-                  SizedBox(height: 20.h,),
-
-                  CommonTextField(
-                    hintText: 'First Name',
-                    textEditingController: _firstNameController,
-                    keyboardType: TextInputType.text,
-                    labelText: 'First Name',
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                  CommonTextField(
-                    hintText: 'Middle Name',
-                    textEditingController: _middleNameController,
-                    keyboardType: TextInputType.text,
-                    labelText: 'Middle Name',
-                    isOptional: true,
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                  CommonTextField(
-                    hintText: 'Surname',
-                    textEditingController: _lastNameController,
-                    keyboardType: TextInputType.text,
-                    labelText: 'Surname',
-                    isOptional: true,
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                  CommonTextField(
-                    hintText: 'Company',
-                    textEditingController: _companyController,
-                    keyboardType: TextInputType.text,
-                    labelText: 'Company',
-                    isOptional: true,
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                  CommonTextField(
-                    hintText: 'Email',
-                    textEditingController: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    labelText: 'Email',
-                    isOptional: true,
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                  CommonPhoneField(
-                    textEditingController: _phoneController,
-                    onChanged: (phoneNumber){
-                      _phoneNumber=phoneNumber;
-                    },
-                    countryIsoCode: widget.contact.countryCode,
-                  ),
-
-                  SizedBox(height: 20.h,),
-
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

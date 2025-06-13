@@ -25,9 +25,11 @@ abstract interface class ContactRepository{
     String? email,
     required String phone,
     required String countryCode,
+    bool? isFavourite,
 });
   Future<Either<Failure,List<Contact>>> getFavoriteContacts();
   Future<Either<Failure,bool>> deleteContact(int contactId);
   Future<Either<Failure,bool>> toggleFavorite(int contactId);
   Future<Either<Failure,Contact?>> getContact(int contactId);
+  Future<Either<Failure,List<Contact>>> searchContact({String? name, String? phoneNumber});
 }

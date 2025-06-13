@@ -1,11 +1,18 @@
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:share_plus/share_plus.dart';
 
 Future<void> callNumber(String phoneNumber) async {
-  final Uri telUri = Uri(scheme: 'tel', path: phoneNumber);
 
-  if (await canLaunchUrl(telUri)) {
-    await launchUrl(telUri);
-  } else {
-    throw 'Could not launch $telUri';
-  }
+  await FlutterPhoneDirectCaller.callNumber(phoneNumber);
+}
+
+void shareContact({String? contactName, String? phoneNumber,String? email}) {
+  final String contactInfo = """
+    Name: $contactName
+    Phone: $phoneNumber
+    Email: $email
+    """;
+  SharePlus.instance.share(
+      ShareParams(text: contactInfo)
+  );
 }

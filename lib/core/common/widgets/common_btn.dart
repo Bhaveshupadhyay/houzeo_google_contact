@@ -8,7 +8,8 @@ class CommonBtn extends StatelessWidget {
   final Color? fillColor;
   final Gradient? gradient;
   final Color? textColor;
-  const CommonBtn({super.key, required this.text, required this.onTap, this.padding, this.fillColor, this.gradient, this.textColor});
+  final double? fontSize;
+  const CommonBtn({super.key, required this.text, required this.onTap, this.padding, this.fillColor, this.gradient, this.textColor, this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,8 @@ class CommonBtn extends StatelessWidget {
         ),
         child: Text(text,
           style: theme.textTheme.titleMedium?.copyWith(
-            color: textColor
+            color: textColor,
+            fontSize: fontSize
           ),
         ),
       ),

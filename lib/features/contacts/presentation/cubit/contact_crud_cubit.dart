@@ -81,7 +81,8 @@ class ContactCrudCubit extends Cubit<ContactState>{
     String? email,
     String? company,
     required String phoneNumber,
-    required String countryCode
+    required String countryCode,
+    bool? isFavourite,
 }) async {
     emit(ContactLoading());
     final res= await _updateContact(UpdateContactParams(
@@ -94,6 +95,7 @@ class ContactCrudCubit extends Cubit<ContactState>{
       company: company,
       phoneNumber: phoneNumber,
       countryCode: countryCode,
+      isFavourite: isFavourite
     ));
     res.fold(
             (failure){

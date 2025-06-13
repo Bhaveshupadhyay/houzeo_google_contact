@@ -93,7 +93,7 @@ class ContactRepositoryImpl implements ContactRepository{
   @override
   Future<Either<Failure,bool>> updateContact({required int contactId, required String firstName,
     String? middleName, String? lastName, String? profileImage, String? company, String? email,
-    required String phone,required String countryCode}) async {
+    required String phone,required String countryCode, bool? isFavourite}) async {
     try{
       final res= await contactLocalDataSource.updateContact(contact:
       ContactModel(
@@ -105,9 +105,24 @@ class ContactRepositoryImpl implements ContactRepository{
         company: company,
         email: email,
         phoneNumber: phone,
-        countryCode: countryCode
+        countryCode: countryCode,
+        isFavourite: isFavourite?? false
       ));
       return right(res!=0);
+    }
+    on Failure catch(e){
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Contact>>> searchContact({String? name, String? phoneNumber}) async {
+    try{
+      final res= await contactLocalDataSource.searchContact(
+          name: name,
+          phoneNumber: phoneNumber
+      );
+      return right(res);
     }
     on Failure catch(e){
       return left(Failure(e.message));

@@ -19,14 +19,18 @@ class CommonTextField extends StatelessWidget {
   final EdgeInsets? contentPadding;
   final List<TextInputFormatter>? inputFormatters;
   final bool isOptional;
+  final FocusNode? focusNode;
+  final InputDecoration? inputDecoration;
+
 
 
   const CommonTextField({super.key, required this.hintText, this.suffixIcon,
     required this.textEditingController, this.onIconTap, required this.keyboardType,
-    this.border, this.onTap, this.inputFormatters, this.bgColor, this.prefixIcon, this.onTextChanged, this.borderRadius, this.contentPadding, this.labelText, this.isOptional=false,});
+    this.border, this.onTap, this.inputFormatters, this.bgColor, this.prefixIcon, this.onTextChanged, this.borderRadius, this.contentPadding, this.labelText, this.isOptional=false, this.inputDecoration, this.focusNode, });
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: borderRadius??BorderRadius.circular(20.r),
@@ -43,6 +47,7 @@ class CommonTextField extends StatelessWidget {
             ),
           Expanded(
             child: TextFormField(
+              focusNode: focusNode,
                 onTap: onTap,
                 onTapOutside: (event) {
                   FocusManager.instance.primaryFocus?.unfocus();
@@ -50,7 +55,8 @@ class CommonTextField extends StatelessWidget {
                 controller: textEditingController,
                 keyboardType: keyboardType,
                 inputFormatters: inputFormatters,
-                decoration: InputDecoration(
+                decoration: inputDecoration??
+                    InputDecoration(
                     hintText: hintText,
                   labelText: labelText
                 ),

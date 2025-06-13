@@ -10,6 +10,7 @@ abstract interface class ContactLocalDataSource {
   Future<List<ContactModel>> favouriteContacts();
   Future<int> toggleFavourite({required int contactId});
   Future<ContactModel?> getContact({required int contactId});
+  Future<List<ContactModel>> searchContact({String? name, String? phoneNumber});
 }
 
 class ContactLocalDataSourceImpl extends ContactLocalDataSource {
@@ -105,5 +106,28 @@ class ContactLocalDataSourceImpl extends ContactLocalDataSource {
     } catch (e) {
       throw Failure('Error toggling favourite: $e');
     }
+  }
+
+  @override
+  Future<List<ContactModel>> searchContact({String? name, String? phoneNumber}) async {
+    String query = 'SELECT * FROM contacts WHERE 1=1';
+
+    List<dynamic> args = [];
+
+    if (name != null && name.isNotEmpty) {
+      query += ' AND (firstName LIKE ? OR middleName LIKE ? OR lastName LIKE ?)';
+      args.add('%$name%');
+      args.add('%$name%');
+      args.add('%$name%');
+    }
+
+    if (phoneNumber != null && phoneNumber.isNotEmpty) {
+      query += ' AND phoneNumber LIKE ?';
+      args.add('%$phoneNumber%');
+    }
+
+    final List<Map<String, dynamic>> result = await database.rawQuery(query, args);
+
+    return result.map((map) => ContactModel.fromMap(map)).toList();
   }
 }

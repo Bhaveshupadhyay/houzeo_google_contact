@@ -21,7 +21,9 @@ class UpdateContact implements UseCase<bool,UpdateContactParams>{
         email: params.email,
         company: params.company,
         phone: params.phoneNumber,
-        countryCode: params.countryCode
+        countryCode: params.countryCode,
+      isFavourite: params.isFavourite
+
     );
   }
 
@@ -37,6 +39,7 @@ class UpdateContactParams{
   final String? company;
   final String phoneNumber;
   final String countryCode;
+  final bool? isFavourite;
 
   UpdateContactParams({
     required this.contactId,
@@ -48,5 +51,6 @@ class UpdateContactParams{
     this.company,
     required this.phoneNumber,
     required this.countryCode,
+    this.isFavourite=false,
   });
 }

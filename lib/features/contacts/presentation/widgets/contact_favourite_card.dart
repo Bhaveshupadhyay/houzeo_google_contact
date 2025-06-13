@@ -20,6 +20,13 @@ class ContactFavouriteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme= Theme.of(context);
+    String fullName= contact.firstName;
+    if(contact.middleName!=null && contact.middleName!.isNotEmpty){
+      fullName = '$fullName ${contact.middleName}';
+    }
+    if(contact.lastName!=null && contact.lastName!.isNotEmpty){
+      fullName = '$fullName ${contact.lastName}';
+    }
 
     return Card(
       elevation: 0,
@@ -40,7 +47,7 @@ class ContactFavouriteCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${contact.firstName} ${contact.lastName}',
+                    Text(fullName,
                       style: theme.textTheme.bodyMedium,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
